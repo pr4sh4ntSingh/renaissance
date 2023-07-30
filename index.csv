@@ -1,0 +1,9 @@
+Table 1
+Problem Name,Folder,ACCEPTED,Techniques,
+num_of_islands,DFS,1,,
+longest_palindromic_substring,Dynamic Programming,1,Bruteforce and DP,
+LRU_Cache,LinkedList,1,DoublyLL - dictionary,
+First_missing_positive,Misc,1,,
+reverse_words_in_string,Misc,1,,
+Spiral Matrix Walk,Misc,1,4 pointers,
+two_sum,Misc,1,3 solutions coded- BruteForce- sorted 2 pointer- hashmap ,
