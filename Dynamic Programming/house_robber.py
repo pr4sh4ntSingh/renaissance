@@ -9,60 +9,54 @@ class Solution:
     ---------------------------------------------------------------------------
     Data Structure:
     ---------------
-    max_robbed_items : a list where item i tells us the max amount that can be 
-    robbed in range i to n.
-    Example:
-            [26, 16, 16, 15, 8, 12]
-                     ^
-                  <- i------------||   
+    nums=[10,1,4,3,8,12], N is Number of houses
 
+    robbery_sum : a list where item i tells us the amount that can be 
+    robbed from houses i...N.
+    Example:
+    robbery_sum=        [26, 16, 16, 15, 12, 12]
+                                 ^ 
+                              <- i------------||   
 
     ---------------------------------------------------------------------------
     Algorithm:
     ----------
-    nums=[10,1,4,3,8,12], N is Number of houses
-
-    let's start from end. Think what will be answer, 
-    a. if there is only one house
+    Let's start from end. Think what will be answer, 
+    a. if there is only one house.
     b. if there is only two house. 
-        and populate last and second last. 
+        and populate robbery_sum's  last and second last. 
 
     Now move forward, at each step you have two choices- 
 
     1. Leave this house -> 
-                        then you can rob neighbors 
+                        then you can rob neighbor
                 total_amount = max(max_robbed[x+1...N])
     2. Rob this house ->  
                         then you have to leave next neighbor
                 total_amount = this house + max(max_robbed[x+2 ... N])
-
-    Why again Max?- 
-        because you can choose like this also [1,0,0,1,0,1]
-
-
-    maximum amount at a given house index x can be calculated via- 
-
-
-
     ---------------------------------------------------------------------------
+    Time Complexity - O(n^2)
+    ---------------------------------------------------------------------------    
     @Prashant Singh
     """
 
     def rob(self, nums: List[int]) -> int:
-        if len(nums) <= 2:
-            return max(nums)
+        if len(nums) == 1:
+            return nums[0]
 
         number_of_houses = len(nums)
-        max_robbed_items = [0 for _ in range(number_of_houses)]
+        robbery_sum = [0 for _ in range(number_of_houses)]
 
-        max_robbed_items[-1], max_robbed_items[-2] = nums[-1], nums[-2]
+        robbery_sum[-1], robbery_sum[-2] = nums[-1],  max(nums[-1], nums[-2])
 
         for i in range(number_of_houses-3, -1, -1):
             # amount in this house nums[i]
-            # if rob this house:
-            total_amount = nums[i] + max(max_robbed_items[i+2:])
-            # if don't rob this house
-            total_amount2 = max(max_robbed_items[i+1:])
-            max_robbed_items[i] = max(total_amount, total_amount2)
+            # if rob this house: then you will have to leave neighor
+            total_amount = nums[i] + max(robbery_sum[i+2:])
+            # if don't rob this house: then you can add neighbor
+            total_amount2 = max(robbery_sum[i+1:])
 
-        return max_robbed_items[0]
+            # final value will be max of both
+            robbery_sum[i] = max(total_amount, total_amount2)
+
+        return robbery_sum[0]
